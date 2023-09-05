@@ -22,7 +22,6 @@ public class MoveState : BaseState
 
     public override void OnEnterState()
     {
-        Controller.anim.SetInteger("AnimationPar", 1);
     }
 
     public override void OnUpdateState()
