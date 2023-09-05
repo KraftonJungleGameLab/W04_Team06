@@ -42,7 +42,7 @@ public class IdleState : BaseState
         if (moveDirection.magnitude > 0.1f)
         {
             float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg;
-            float angle = Mathf.LerpAngle(Controller.transform.eulerAngles.y, targetAngle, Time.deltaTime * 10.0f);
+            float angle = Mathf.LerpAngle(Controller.transform.eulerAngles.y, targetAngle, Time.fixedDeltaTime * 10.0f);
             Controller.transform.rotation = Quaternion.Euler(0.0f, angle, 0.0f);
 
             Controller.controller.SimpleMove(moveDirection * Controller.moveSpeed);

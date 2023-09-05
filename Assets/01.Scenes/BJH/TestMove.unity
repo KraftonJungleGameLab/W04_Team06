@@ -272,7 +272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8082007f1ad7c4449b3419eea8f9ba1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 0
+  moveSpeed: 3
   sprintSpeed: 0
   jumpSpeed: 0
   groundNormal: {x: 0, y: 0, z: 0}
