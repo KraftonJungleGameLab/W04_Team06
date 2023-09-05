@@ -16,7 +16,7 @@ public class PlayerInputCustom : MonoBehaviour
     private void Awake()
     {
         input = new InputData();
-        playerInput = new PlayerInputActions();
+        playerInput = new PlayerInputActionsCustom();
 
         if (_instance != null)
         {
@@ -32,7 +32,7 @@ public class PlayerInputCustom : MonoBehaviour
     //----------------------------------------------------
 
     private InputData input;
-    private PlayerInputActions playerInput;
+    private PlayerInputActionsCustom playerInput;
 
     void Start()
     {
