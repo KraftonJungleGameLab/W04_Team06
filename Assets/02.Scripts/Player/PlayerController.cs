@@ -17,10 +17,10 @@ public class PlayerController : MonoBehaviour
      public InputData input;
 
     [Header("Movement")]
-    public float gravity = 10.0f;
+    public float gravity = 0.7f;
     public float gravityAcceleration = 1.0f;
-    public float moveSpeed = 3.0f;
-    public float jumpImpulse;
+    public float moveSpeed = 11.0f;
+    public float jumpImpulse = 0.25f;
     [HideInInspector] public Vector3 moveVelocity;
     [HideInInspector] public Vector3 gravityVelocity;
     private Vector3 finalVelocity;
@@ -64,14 +64,6 @@ public class PlayerController : MonoBehaviour
             {
                 gravityVelocity -= Vector3.up * gravity * Time.fixedDeltaTime;
             }
-        }
-        ResetYVelocityWhenGrounded();
-    }
-    private void ResetYVelocityWhenGrounded()
-    {
-        if (gravityVelocity.y < 0.1f && isGrounded == true)
-        {
-            gravityVelocity.y = 0.0f;
         }
     }
 
