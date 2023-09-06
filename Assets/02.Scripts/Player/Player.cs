@@ -6,6 +6,9 @@ public class Player : MonoBehaviour
 {
     public StateMachine stateMachine { get; private set; }
     public float curHp;
+    public float recoveryTime = 3.0f;
+    public float recoveryHp = 30.0f;
+    [HideInInspector] public bool isRecoveryOn = true;
     private PlayerController playerController {get; set;}
     private float maxHp = 100;
     // Status
@@ -21,11 +24,13 @@ public class Player : MonoBehaviour
     void Start()
     {
         InitStateMachine();
+        curHp = maxHp;
     }
 
     void Update()
     {
         stateMachine?.UpdateState();
+        RecoveryHealth();
     }
 
     void FixedUpdate()
@@ -45,5 +50,16 @@ public class Player : MonoBehaviour
         stateMachine.AddState(StateName.Jump, new JumpState(playerController));
     }
 
+    public void RecoveryHealth()
+    {
+        if(isRecoveryOn)
+        {
+            curHp += 30.0f * Time.deltaTime;
 
+            if(curHp > maxHp)
+            {
+                curHp = maxHp;
+            }
+        }
+    }
 }

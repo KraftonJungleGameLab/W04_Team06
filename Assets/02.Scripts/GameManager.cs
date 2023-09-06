@@ -26,5 +26,10 @@ public class GameManager : MonoBehaviour
     }
     //----------------------------------------------------
 
+    public Player player;
 
+    private void Start()
+    {
+        player = GameObject.Find("Player").GetComponent<Player>();
+    }
 }

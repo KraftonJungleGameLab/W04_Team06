@@ -6,6 +6,7 @@ public class LightDetect : MonoBehaviour
 {
     #region PublicVariables
     public Player player;
+    public float damage = 100.0f;
     #endregion
 
     #region PrivateVariables
@@ -22,7 +23,7 @@ public class LightDetect : MonoBehaviour
 #region PrivateMethods
     void Start()
     {
-       player = GetComponent<Player>();
+        player = GameManager.Instance.player;
        lightPosition  = this.gameObject.transform.position;
     }
     void Update()
@@ -39,13 +40,8 @@ public class LightDetect : MonoBehaviour
         //Debug.Log(isInLight);
         if (isInLight)
         {
-            StartCoroutine(iePlayerDamage());
+            player.curHp -= damage * Time.deltaTime;
         }
-    }
-    private IEnumerator iePlayerDamage()
-    {
-        player.curHp -= 1;
-        yield return new WaitForSeconds(1f);
     }
 
     private void OnTriggerStay(Collider other)
@@ -55,10 +51,13 @@ public class LightDetect : MonoBehaviour
             CheckObjectsBetween(character.transform.position, lightPosition);
             if(objectsBetween.Count == 0){
                 isInLight = true;
+                player.isRecoveryOn = false;
+                CancelInvoke("PlayerRecoveryOn");
             }
             else
             {
                 isInLight = false;
+                Invoke("PlayerRecoveryOn", 3.0f);
             }
         }
     }
@@ -67,6 +66,7 @@ public class LightDetect : MonoBehaviour
         if(other.gameObject.tag == "Player")
         {
             isInLight = false;
+            Invoke("PlayerRecoveryOn", 3.0f);
         }
     }
     private void CheckObjectsBetween(Vector3 startPosition, Vector3 endPosition)
@@ -86,6 +86,11 @@ public class LightDetect : MonoBehaviour
                 objectsBetween.Add(hitRenderer);
             }
         }
+    }
+
+    private void PlayerRecoveryOn()
+    {
+        player.isRecoveryOn = true;
     }
     #endregion
 }
