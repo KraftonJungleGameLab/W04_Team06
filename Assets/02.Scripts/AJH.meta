@@ -1,6 +1,10 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/02.Scripts/AJH.meta
 guid: b9118356f112c8c4b92f1146140f2f97
 folderAsset: yes
+========
+guid: 4f4e75e59624de94fbd6de5f66d299b5
+>>>>>>>> main:Assets/Akishaqs/Characters/Liam/DemoScenes/FaceAnimations.unity.meta
 DefaultImporter:
   externalObjects: {}
   userData: 

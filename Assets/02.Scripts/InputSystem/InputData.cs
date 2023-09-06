@@ -14,4 +14,14 @@ public struct InputData
     public const byte DASHBUTTON            = 0x01 << 2;
     public const byte INTERACTIONBUTTON     = 0x01 << 3;
     public const byte FLASHBUTTON           = 0x01 << 4;
+
+    public static bool IsButtonOn(byte inputByte, byte buttonByte)
+    {
+        if ((inputByte & buttonByte) == buttonByte)
+        {
+            return true;
+        }
+
+        return false;
+    }
 }
