@@ -22,7 +22,7 @@ public class MoveState : BaseState
 
     public override void OnEnterState()
     {
-        Controller.animator.SetBool("Move", true); // Move 트리거 파라미터를 true로 설정
+        //Controller.animator.SetBool("Move", true); // Move 트리거 파라미터를 true로 설정
     }
 
     public override void OnUpdateState()
@@ -49,7 +49,7 @@ public class MoveState : BaseState
 
     public override void OnExitState()
     {
-        Controller.animator.SetBool("Move", false); // Move 트리거 파라미터를 false로 설정
+        //Controller.animator.SetBool("Move", false); // Move 트리거 파라미터를 false로 설정
     }
 
     private bool CanIdle()
