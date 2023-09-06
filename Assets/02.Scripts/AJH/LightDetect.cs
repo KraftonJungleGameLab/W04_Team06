@@ -5,13 +5,13 @@ using UnityEngine;
 public class LightDetect : MonoBehaviour
 {
     #region PublicVariables
-
+    public Player player;
     #endregion
 
     #region PrivateVariables
     private List<Renderer> objectsBetween = new List<Renderer>();
     [SerializeField] private GameObject character;
-    [SerializeField] private Transform lightPosition;
+    private Vector3 lightPosition;
     private bool isInLight = false;
 #endregion
 
@@ -22,7 +22,8 @@ public class LightDetect : MonoBehaviour
 #region PrivateMethods
     void Start()
     {
-        
+       player = GetComponent<Player>();
+       lightPosition  = this.gameObject.transform.position;
     }
     void Update()
     {
@@ -43,16 +44,15 @@ public class LightDetect : MonoBehaviour
     }
     private IEnumerator iePlayerDamage()
     {
-        Debug.Log("Player Hit");
+        player.curHp -= 1;
         yield return new WaitForSeconds(1f);
     }
 
     private void OnTriggerStay(Collider other)
     {
-        Debug.Log("OnTrigger");
         if(other.gameObject.tag == "Player")
         {
-            CheckObjectsBetween(character.transform.position, lightPosition.position);
+            CheckObjectsBetween(character.transform.position, lightPosition);
             if(objectsBetween.Count == 0){
                 isInLight = true;
             }
