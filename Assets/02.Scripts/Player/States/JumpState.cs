@@ -21,12 +21,13 @@ public class JumpState : BaseState
 
     public override void OnEnterState()
     {
-
+        Controller.gravityVelocity = Vector3.up * Controller.jumpImpulse;
     }
 
     public override void OnUpdateState()
     {
-        if (CanIdle())
+        if (CanMove()
+            || CanIdle())
         {
             return;
         }
@@ -39,11 +40,30 @@ public class JumpState : BaseState
 
     public override void OnExitState()
     {
-        Controller.superJumpTimer = 0.0f;
+
+    }
+
+    private bool CanMove()
+    {
+        if(Controller.isGrounded
+            && Controller.input.direction == Vector3.zero)
+        {
+            Controller.player.stateMachine.ChangeState(StateName.Move);
+            return true;
+        }
+
+        return false;
     }
 
     private bool CanIdle()
     {
+        if(Controller.isGrounded
+            && Controller.gravityVelocity.y < 0.1f)
+        {
+            Controller.player.stateMachine.ChangeState(StateName.Idle);
+            return true;
+        }
+
         return false;
     }
 }

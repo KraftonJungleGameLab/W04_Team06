@@ -17,19 +17,14 @@ public class PlayerController : MonoBehaviour
      public InputData input;
 
     [Header("Movement")]
+    public float gravity = 10.0f;
+    public float gravityAcceleration = 1.0f;
     public float moveSpeed = 3.0f;
-    public float sprintSpeed;
-    public float jumpSpeed;
-    public Vector3 groundNormal;
-    public bool isGround;
-    public bool isGroundCollision;
-    public float targetRotation = 0.0f;
-    public float rotationSmoothTime = 0.12f;
-    public float rotationVelocity;
-    public float superJumpTimer = 0f;
-    public float superJumpTime = 2f;
-    public float communicateTime = 1f;
-    public float communicateTimer = 0f;
+    public float jumpImpulse;
+    [HideInInspector] public Vector3 moveVelocity;
+    [HideInInspector] public Vector3 gravityVelocity;
+    private Vector3 finalVelocity;
+    [HideInInspector] public bool isGrounded;
 
     void Awake()
     {
@@ -39,6 +34,13 @@ public class PlayerController : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
     }
 
+    private void Start()
+    {
+        moveVelocity = Vector3.zero;
+        gravityVelocity = Vector3.zero;
+        finalVelocity = Vector3.zero;
+    }
+
     private void Update()
     {
         PlayerInputCustom.Instance.GetInput(out input);
@@ -46,6 +48,51 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        CheckGrounded();
+        FixedUpdatePlayerMove();
+    }
 
+    private void CalculateGravity()
+    {
+        if (isGrounded == false)
+        {
+            if (gravityVelocity.y > gravity && gravityVelocity.y < 0)
+            {
+                gravityVelocity -= Vector3.up * gravityAcceleration * Time.fixedDeltaTime;
+            }
+            else
+            {
+                gravityVelocity -= Vector3.up * gravity * Time.fixedDeltaTime;
+            }
+        }
+        ResetYVelocityWhenGrounded();
+    }
+    private void ResetYVelocityWhenGrounded()
+    {
+        if (gravityVelocity.y < 0.1f && isGrounded == true)
+        {
+            gravityVelocity.y = 0.0f;
+        }
+    }
+
+    private void CheckGrounded()
+    {
+        if (controller.isGrounded)
+        {
+            isGrounded = true;
+            return;
+        }
+
+        float maxDistance = 0.5f;
+        Debug.DrawRay(transform.position, Vector3.down * maxDistance, Color.red);
+        Ray ray = new Ray(this.transform.position, Vector3.down);
+        isGrounded = Physics.Raycast(ray, maxDistance);
+    }
+
+    private void FixedUpdatePlayerMove()
+    {
+        CalculateGravity();
+        finalVelocity = moveVelocity + gravityVelocity;
+        controller.Move(finalVelocity);
     }
 }
