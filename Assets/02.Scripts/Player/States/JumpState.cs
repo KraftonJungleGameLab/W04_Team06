@@ -46,7 +46,8 @@ public class JumpState : BaseState
     private bool CanMove()
     {
         if(Controller.isGrounded
-            && Controller.input.direction == Vector3.zero)
+            && Controller.gravityVelocity.y < 0.1f
+            && Controller.input.direction != Vector3.zero)
         {
             Controller.player.stateMachine.ChangeState(StateName.Move);
             return true;
