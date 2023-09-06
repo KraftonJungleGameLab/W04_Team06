@@ -5,8 +5,9 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public StateMachine stateMachine { get; private set; }
+    public float curHp;
     private PlayerController playerController {get; set;}
-
+    private float maxHp = 100;
     // Status
     public void SetController(PlayerController _playerController){
         playerController = _playerController;
@@ -43,4 +44,6 @@ public class Player : MonoBehaviour
         stateMachine.AddState(StateName.Move, new MoveState(playerController));
         stateMachine.AddState(StateName.Jump, new JumpState(playerController));
     }
+
+
 }
