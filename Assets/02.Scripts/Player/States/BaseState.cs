@@ -21,6 +21,8 @@ public enum StateName
     Idle = 0,
     Move,
     Jump,
+    GrabIdle,
+    GrabMove
 }
 
 public class StateMachine
