@@ -1,10 +1,9 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class LightDetect : MonoBehaviour
+public class LightDetectFollow : MonoBehaviour
 {
     #region PublicVariables
     public Player player;
@@ -19,7 +18,7 @@ public class LightDetect : MonoBehaviour
     private DOTweenPath dOTweenPath;
     private Tweener doLookAtPlayer;
     private Quaternion curRotation;
-#endregion
+    #endregion
 
     #region PublicMethods
 
@@ -56,13 +55,18 @@ public class LightDetect : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            
-            if(CheckObjectsBetween(character.transform.position, lightPosition))
+
+            if (CheckObjectsBetween(character.transform.position, lightPosition))
             {
                 isInLight = true;
                 player.isRecoveryOn = false;
                 CancelInvoke("PlayerRecoveryOn");
-
+                StopCoroutine("CallDOTWeenPlay");
+                if (doLookAtPlayer == null || !doLookAtPlayer.IsPlaying())
+                {
+                    doLookAtPlayer = transform.DOLookAt(character.transform.position, 0.5f);
+                }
+                dOTweenPath.DOPause();
                 //CallDOTWeenPauseCoroutine = StartCoroutine(CallDOTWeenPause(character.transform.position));
                 //StopAndStartCallDOTWeenPauseCoroutine();
                 //if (CallDOTWeenPlayCoroutine != null)
@@ -72,7 +76,7 @@ public class LightDetect : MonoBehaviour
             {
                 isInLight = false;
                 Invoke("PlayerRecoveryOn", 3.0f);
-
+                StartCoroutine("CallDOTWeenPlay");
                 //if (CallDOTWeenPlayCoroutine.IsUnityNull())
                 //{
                 //    Debug.Log(CallDOTWeenPlayCoroutine);
@@ -85,10 +89,11 @@ public class LightDetect : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        if(other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player")
         {
             isInLight = false;
             Invoke("PlayerRecoveryOn", 3.0f);
+            StartCoroutine("CallDOTWeenPlay");
             //if (CallDOTWeenPauseCoroutine != null)
             //    StopCoroutine(CallDOTWeenPauseCoroutine);
             //StopAndStartCallDOTWeenPlayCoroutine();
@@ -103,6 +108,7 @@ public class LightDetect : MonoBehaviour
         int layerMask = 1 << LayerMask.NameToLayer("Ground");
         RaycastHit[] hits = Physics.RaycastAll(ray, distance, layerMask);
         Debug.DrawLine(startPosition, endPosition, Color.red);
+        Debug.Log("CheckObjects");
 
         if (hits.Length == 0)
         {
@@ -115,6 +121,13 @@ public class LightDetect : MonoBehaviour
     private void PlayerRecoveryOn()
     {
         player.isRecoveryOn = true;
+    }
+
+    private IEnumerator CallDOTWeenPlay()
+    {
+        yield return new WaitForSeconds(3.0f);
+        transform.DORotateQuaternion(curRotation, 0.5f);
+        dOTweenPath.DOPlay();
     }
     #endregion
 }
