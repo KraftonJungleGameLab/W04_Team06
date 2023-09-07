@@ -21,11 +21,16 @@ public class PlayerController : MonoBehaviour
     public float gravityAcceleration = 1.0f;
     public float moveSpeed = 11.0f;
     public float jumpImpulse = 0.25f;
+    public float rotationVelocity = 20.0f;
     [HideInInspector] public Vector3 moveVelocity;
     [HideInInspector] public Vector3 gravityVelocity;
     private Vector3 finalVelocity;
+    [HideInInspector] public Vector3 inputDirection;
+    [HideInInspector] public Vector3 moveDirection;
     [HideInInspector] public bool isGrounded;
     public float interactGrabSlowSpeedRate = 0.5f;
+
+    private Camera playerCamera;
 
     void Awake()
     {
@@ -33,6 +38,7 @@ public class PlayerController : MonoBehaviour
         player.SetController(this);
         controller = GetComponent<CharacterController>();
         animator = GetComponentInChildren<Animator>();
+        playerCamera = Camera.main;
     }
 
     private void Start()
@@ -45,6 +51,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         PlayerInputCustom.Instance.GetInput(out input);
+        CalcMoveDirection();
     }
 
     private void FixedUpdate()
@@ -88,12 +95,28 @@ public class PlayerController : MonoBehaviour
         finalVelocity = moveVelocity + gravityVelocity;
         controller.Move(finalVelocity);
     }
+
+    public void CalcMoveDirection()
+    {
+        inputDirection = new Vector3(input.direction.x, 0.0f, input.direction.z).normalized;
+
+        if(inputDirection.magnitude > 0.1f)
+        {
+            float targetAngle = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg;
+            float angle = Mathf.LerpAngle(transform.eulerAngles.y, targetAngle, Time.fixedDeltaTime * 10.0f);
+            transform.rotation = Quaternion.Euler(0.0f, angle, 0.0f);
+
+            Vector3 forwardDirection = playerCamera.transform.forward;
+            Vector3 rightDirection = playerCamera.transform.right;
+            Vector3 rotateDirection = (forwardDirection * input.direction.z + rightDirection * input.direction.x).normalized;
+            rotateDirection.y = 0f;
+            moveDirection = rotateDirection;
+        }
+    }
     
     public void MoveFixedUpdate()
     {
-        Vector3 moveDirection = new Vector3(input.direction.x, 0.0f, input.direction.z).normalized;
-
-        if (moveDirection.magnitude > 0.1f)
+        if (inputDirection.magnitude > 0.1f)
         {
             moveVelocity = moveDirection * moveSpeed * Time.fixedDeltaTime;
         }
@@ -101,13 +124,10 @@ public class PlayerController : MonoBehaviour
 
     public void RotateFixedUpdate()
     {
-        Vector3 moveDirection = new Vector3(input.direction.x, 0.0f, input.direction.z).normalized;
-
-        if (moveDirection.magnitude > 0.1f)
+        if (inputDirection.magnitude > 0.1f)
         {
-            float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg;
-            float angle = Mathf.LerpAngle(transform.eulerAngles.y, targetAngle, Time.fixedDeltaTime * 10.0f);
-            transform.rotation = Quaternion.Euler(0.0f, angle, 0.0f);
+            Quaternion moveRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
+            animator.transform.rotation = Quaternion.Lerp(animator.transform.rotation, moveRotation, rotationVelocity * Time.fixedDeltaTime);
         }
     }
 }
