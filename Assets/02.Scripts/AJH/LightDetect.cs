@@ -24,7 +24,7 @@ public class LightDetect : MonoBehaviour
     void Start()
     {
         player = GameManager.Instance.player;
-       lightPosition  = this.gameObject.transform.position;
+       
     }
     void Update()
     {
@@ -38,18 +38,21 @@ public class LightDetect : MonoBehaviour
         //    isInLight = false;
         //}
         //Debug.Log(isInLight);
+        lightPosition = this.gameObject.transform.position;
         if (isInLight)
         {
             player.curHp -= damage * Time.deltaTime;
+            Debug.Log(player.curHp);
         }
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if(other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player")
         {
-            CheckObjectsBetween(character.transform.position, lightPosition);
-            if(objectsBetween.Count == 0){
+            
+            if(CheckObjectsBetween(character.transform.position, lightPosition))
+            {
                 isInLight = true;
                 player.isRecoveryOn = false;
                 CancelInvoke("PlayerRecoveryOn");
@@ -69,23 +72,23 @@ public class LightDetect : MonoBehaviour
             Invoke("PlayerRecoveryOn", 3.0f);
         }
     }
-    private void CheckObjectsBetween(Vector3 startPosition, Vector3 endPosition)
+    private bool CheckObjectsBetween(Vector3 startPosition, Vector3 endPosition)
     {
+        startPosition.y += 1.0f;
         Vector3 rayDirection = endPosition - startPosition;
         Ray ray = new Ray(startPosition, rayDirection);
         float distance = Vector3.Distance(startPosition, endPosition); // 두 지점 사이의 거리 계산
-        int layerMask = 1 << LayerMask.NameToLayer("Player") | 1 << LayerMask.NameToLayer("Ground");
-        RaycastHit[] hits = Physics.RaycastAll(ray, distance, ~layerMask);
+        int layerMask = 1 << LayerMask.NameToLayer("Ground");
+        RaycastHit[] hits = Physics.RaycastAll(ray, distance, layerMask);
         Debug.DrawLine(startPosition, endPosition, Color.red);
         Debug.Log("CheckObjects");
-        foreach (RaycastHit hit in hits)
+
+        if (hits.Length == 0)
         {
-            Renderer hitRenderer = hit.collider.GetComponent<Renderer>();
-            if (hitRenderer != null)
-            {
-                objectsBetween.Add(hitRenderer);
-            }
+            return true;
         }
+
+        return false;
     }
 
     private void PlayerRecoveryOn()
