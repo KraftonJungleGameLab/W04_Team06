@@ -1342,6 +1342,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: shadow
       objectReference: {fileID: 0}
+    - target: {fileID: 3236599206912284862, guid: 19864d94b00a0d14aa986bdeced04e8f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 034d0cb360d24134b9cc20761dddc0e3, type: 2}
+    - target: {fileID: 3236599206912284862, guid: 19864d94b00a0d14aa986bdeced04e8f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: d308ac76a064aa44992c2a44fecd74d5, type: 2}
     - target: {fileID: 5866666021909216657, guid: 19864d94b00a0d14aa986bdeced04e8f,
         type: 3}
       propertyPath: m_Avatar
@@ -1595,7 +1605,7 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   m_BlendingMode: 0
-  m_Intensity: 6.62
+  m_Intensity: 1
   m_IntensityMultiplier: 1
   m_HDRPExposureWeight: 0
   m_SpotAngle: 30.7
