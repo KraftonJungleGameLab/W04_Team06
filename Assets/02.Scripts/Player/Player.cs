@@ -31,6 +31,10 @@ public class Player : MonoBehaviour
     {
         stateMachine?.UpdateState();
         RecoveryHealth();
+        if(curHp <= 0)
+        {
+
+        }
     }
 
     void FixedUpdate()
