@@ -102,10 +102,6 @@ public class PlayerController : MonoBehaviour
 
         if(inputDirection.magnitude > 0.1f)
         {
-            float targetAngle = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg;
-            float angle = Mathf.LerpAngle(transform.eulerAngles.y, targetAngle, Time.fixedDeltaTime * 10.0f);
-            transform.rotation = Quaternion.Euler(0.0f, angle, 0.0f);
-
             Vector3 forwardDirection = playerCamera.transform.forward;
             Vector3 rightDirection = playerCamera.transform.right;
             Vector3 rotateDirection = (forwardDirection * input.direction.z + rightDirection * input.direction.x).normalized;
@@ -127,7 +123,7 @@ public class PlayerController : MonoBehaviour
         if (inputDirection.magnitude > 0.1f)
         {
             Quaternion moveRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
-            animator.transform.rotation = Quaternion.Lerp(animator.transform.rotation, moveRotation, rotationVelocity * Time.fixedDeltaTime);
+            animator.transform.localRotation = Quaternion.Lerp(animator.transform.localRotation, moveRotation, rotationVelocity * Time.fixedDeltaTime);
         }
     }
 }
