@@ -158,9 +158,9 @@ GameObject:
   - component: {fileID: 96939594}
   - component: {fileID: 96939592}
   - component: {fileID: 96939595}
-  - component: {fileID: 96939596}
   - component: {fileID: 96939597}
   - component: {fileID: 96939598}
+  - component: {fileID: 96939599}
   m_Layer: 0
   m_Name: Spotlight and Beam HD
   m_TagString: Untagged
@@ -273,21 +273,6 @@ MonoBehaviour:
     m_Bits: 65
   m_UseOcclusionCulling: 1
   m_DepthMapResolution: 128
---- !u!114 &96939596
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 96939590}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae6eef3a8baea7b42a09a26c2c8c1247, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  damage: 100
-  character: {fileID: 57404000}
 --- !u!114 &96939597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -423,6 +408,21 @@ MonoBehaviour:
   lastSrcRotation: {x: 0.9961947, y: 0, z: 0, w: 0.08715588}
   wpsDropdown: 1
   dropToFloorOffset: 0
+--- !u!114 &96939599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 96939590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1233231436584894abecba501a5f6a4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  damage: 100
+  character: {fileID: 57404000}
 --- !u!1 &181108969
 GameObject:
   m_ObjectHideFlags: 0
