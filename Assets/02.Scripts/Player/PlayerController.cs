@@ -25,13 +25,14 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public Vector3 gravityVelocity;
     private Vector3 finalVelocity;
     [HideInInspector] public bool isGrounded;
+    public float interactGrabSlowSpeedRate = 0.5f;
 
     void Awake()
     {
         player = GetComponent<Player>();
         player.SetController(this);
         controller = GetComponent<CharacterController>();
-        //animator = GetComponentInChildren<Animator>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     private void Start()
@@ -86,5 +87,27 @@ public class PlayerController : MonoBehaviour
         CalculateGravity();
         finalVelocity = moveVelocity + gravityVelocity;
         controller.Move(finalVelocity);
+    }
+    
+    public void MoveFixedUpdate()
+    {
+        Vector3 moveDirection = new Vector3(input.direction.x, 0.0f, input.direction.z).normalized;
+
+        if (moveDirection.magnitude > 0.1f)
+        {
+            moveVelocity = moveDirection * moveSpeed * Time.fixedDeltaTime;
+        }
+    }
+
+    public void RotateFixedUpdate()
+    {
+        Vector3 moveDirection = new Vector3(input.direction.x, 0.0f, input.direction.z).normalized;
+
+        if (moveDirection.magnitude > 0.1f)
+        {
+            float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg;
+            float angle = Mathf.LerpAngle(transform.eulerAngles.y, targetAngle, Time.fixedDeltaTime * 10.0f);
+            transform.rotation = Quaternion.Euler(0.0f, angle, 0.0f);
+        }
     }
 }

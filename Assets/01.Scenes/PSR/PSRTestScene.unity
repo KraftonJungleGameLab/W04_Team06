@@ -394,7 +394,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 290801243}
   m_LocalRotation: {x: 0, y: -1e-45, z: 0, w: 1}
-  m_LocalPosition: {x: 6, y: 1, z: -10}
+  m_LocalPosition: {x: 3.75, y: 3.25, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -578,8 +578,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.3, y: 1, z: 1}
-  m_Center: {x: -0.15, y: 0, z: 0}
+  m_Size: {x: 3, y: 0.2, z: 0.2}
+  m_Center: {x: -1, y: 0, z: 0}
 --- !u!114 &297597869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -592,6 +592,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6472056c49cbfb34e879f4b93fc4cef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minMovableRange: {x: 0, y: 0, z: -5}
+  maxMovableRange: {x: 0, y: 0, z: 5}
+  isInteracting: 0
+  isHeavy: 1
+  defaultPosition: {x: 0, y: 0, z: 0}
+  parent: {fileID: 0}
 --- !u!1 &742172253
 GameObject:
   m_ObjectHideFlags: 0
@@ -1626,6 +1632,7 @@ MonoBehaviour:
   moveVelocity: {x: 0, y: 0, z: 0}
   gravityVelocity: {x: 0, y: 0, z: 0}
   isGrounded: 0
+  interactGrabSlowSpeedRate: 0.5
 --- !u!114 &1887815758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1905,6 +1912,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a59639e61d0ca94409510f310a014b16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
 --- !u!4 &2015747983
 Transform:
   m_ObjectHideFlags: 0

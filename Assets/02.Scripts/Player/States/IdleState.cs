@@ -27,7 +27,8 @@ public class IdleState : BaseState
 
     public override void OnUpdateState()
     {
-        if (CanMove()
+        if (CanInteract()
+            || CanMove()
             || CanJump())
         {
             return;
@@ -60,6 +61,19 @@ public class IdleState : BaseState
             && InputData.IsButtonOn(Controller.input.buttonsDown, InputData.JUMPBUTTON))
         {
             Controller.player.stateMachine.ChangeState(StateName.Jump);
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool CanInteract()
+    {
+        if(Controller.isGrounded
+            && Controller.player.interactableObject != null
+            && InputData.IsButtonOn(Controller.input.buttonsDown, InputData.INTERACTIONBUTTON))
+        {
+            Controller.player.stateMachine.ChangeState(Controller.player.interactableObject.GetInteractState());
             return true;
         }
 

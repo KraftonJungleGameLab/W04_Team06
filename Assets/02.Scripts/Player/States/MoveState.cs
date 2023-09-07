@@ -22,12 +22,13 @@ public class MoveState : BaseState
 
     public override void OnEnterState()
     {
-        //Controller.animator.SetBool("Move", true); // Move 트리거 파라미터를 true로 설정
+        Controller.animator.SetBool("Move", true); // Move 트리거 파라미터를 true로 설정
     }
 
     public override void OnUpdateState()
     {
-        if(CanJump()
+        if(CanInteract()
+            || CanJump()
             || CanIdle())
         {
             return;
@@ -36,20 +37,13 @@ public class MoveState : BaseState
 
     public override void OnFixedUpdateState()
     {
-        Vector3 moveDirection = new Vector3(Controller.input.direction.x, 0.0f, Controller.input.direction.z).normalized;
-
-        if (moveDirection.magnitude > 0.1f)
-        {
-            float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg;
-            float angle = Mathf.LerpAngle(Controller.transform.eulerAngles.y, targetAngle, Time.fixedDeltaTime * 10.0f);
-            Controller.transform.rotation = Quaternion.Euler(0.0f, angle, 0.0f);
-            Controller.moveVelocity = moveDirection * Controller.moveSpeed * Time.fixedDeltaTime;
-        }
+        Controller.RotateFixedUpdate();
+        Controller.MoveFixedUpdate();
     }
 
     public override void OnExitState()
     {
-        //Controller.animator.SetBool("Move", false); // Move 트리거 파라미터를 false로 설정
+        Controller.animator.SetBool("Move", false); // Move 트리거 파라미터를 false로 설정
     }
 
     private bool CanIdle()
@@ -71,6 +65,19 @@ public class MoveState : BaseState
             Controller.player.stateMachine.ChangeState(StateName.Jump);
             return true;
         }
+        return false;
+    }
+
+    private bool CanInteract()
+    {
+        if (Controller.isGrounded
+            && Controller.player.interactableObject != null
+            && InputData.IsButtonOn(Controller.input.buttonsDown, InputData.INTERACTIONBUTTON))
+        {
+            Controller.player.stateMachine.ChangeState(Controller.player.interactableObject.GetInteractState());
+            return true;
+        }
+
         return false;
     }
 }
