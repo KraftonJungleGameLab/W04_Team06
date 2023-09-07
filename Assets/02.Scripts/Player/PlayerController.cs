@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
         player = GetComponent<Player>();
         player.SetController(this);
         controller = GetComponent<CharacterController>();
-        //animator = GetComponentInChildren<Animator>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     private void Start()
