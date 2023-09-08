@@ -58,6 +58,8 @@ public class Player : MonoBehaviour
         stateMachine.AddState(StateName.Jump, new JumpState(playerController));
         stateMachine.AddState(StateName.GrabIdle, new GrabIdleState(playerController));
         stateMachine.AddState(StateName.GrabMove, new GrabMoveState(playerController));
+        stateMachine.AddState(StateName.EquipIdle, new EquipIdleState(playerController));
+        stateMachine.AddState(StateName.EquipMove, new EquipMoveState(playerController));
     }
 
     public void RecoveryHealth()

@@ -6,7 +6,7 @@ public class MovableObject : MonoBehaviour, IInteractableObject
 {
     public Vector3 minMovableRange;
     public Vector3 maxMovableRange;
-    public bool isHeavy = true;
+    public float slowRate = 0.5f;
 
     [HideInInspector] public Vector3 defaultPosition;
     [HideInInspector] public Transform defaultParent;
@@ -36,7 +36,7 @@ public class MovableObject : MonoBehaviour, IInteractableObject
         if (other.CompareTag("Player"))
         {
             PlayerController playerController = other.GetComponent<PlayerController>();
-            if ((MovableObject)playerController.player.interactableObject == this)
+            if (playerController.player.interactableObject == (IInteractableObject)this)
             {
                 playerController.player.interactableObject = null;
             }

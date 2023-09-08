@@ -8,7 +8,7 @@ public class EquippableObject : MonoBehaviour, IInteractableObject
     [HideInInspector] public Vector3 defaultPosition;
     [HideInInspector] public Transform defaultParent;
 
-    private StateName interactState = StateName.GrabIdle;
+    private StateName interactState = StateName.EquipIdle;
 
     private void Start()
     {
@@ -33,7 +33,7 @@ public class EquippableObject : MonoBehaviour, IInteractableObject
         if (other.CompareTag("Player"))
         {
             PlayerController playerController = other.GetComponent<PlayerController>();
-            if ((MovableObject)playerController.player.interactableObject == this)
+            if (playerController.player.interactableObject == (IInteractableObject)this)
             {
                 playerController.player.interactableObject = null;
             }
