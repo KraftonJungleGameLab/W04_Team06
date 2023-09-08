@@ -33,7 +33,8 @@ public class EquippableObject : MonoBehaviour, IInteractableObject
         if (other.CompareTag("Player"))
         {
             PlayerController playerController = other.GetComponent<PlayerController>();
-            if (playerController.player.interactableObject == (IInteractableObject)this)
+            if (playerController.player.interactableObject == (IInteractableObject)this
+                && (playerController.player.stateMachine.CurrentState.GetType() != typeof(EquipIdleState) || playerController.player.stateMachine.CurrentState.GetType() != typeof(EquipIdleState)))
             {
                 playerController.player.interactableObject = null;
             }
