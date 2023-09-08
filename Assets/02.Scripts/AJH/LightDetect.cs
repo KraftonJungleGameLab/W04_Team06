@@ -108,7 +108,6 @@ public class LightDetect : MonoBehaviour
         {
             return true;
         }
-
         return false;
     }
 
