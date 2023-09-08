@@ -18,6 +18,8 @@ public class LightDetectFollow : MonoBehaviour
     private DOTweenPath dOTweenPath;
     private Tweener doLookAtPlayer;
     private Quaternion curRotation;
+    private Coroutine CallDOTWeenPlayCoroutine;
+    private bool isCallDOTWeenPlayCoroutineOn;
     #endregion
 
     #region PublicMethods
@@ -31,23 +33,14 @@ public class LightDetectFollow : MonoBehaviour
         curRotation = transform.rotation;
         player = GameManager.Instance.player;
         dOTweenPath = GetComponent<DOTweenPath>();
+        isCallDOTWeenPlayCoroutineOn = false;
     }
     void Update()
     {
-        //CheckObjectsBetween(character.transform.position, lightPosition.position);
-        //if (objectsBetween.Count == 0)
-        //{
-        //    isInLight = true;
-        //}
-        //else
-        //{
-        //    isInLight = false;
-        //}
-        //Debug.Log(isInLight);
         lightPosition = this.gameObject.transform.position;
         if (isInLight)
         {
-            player.curHp -= damage * Time.deltaTime;
+            player.DamageHealth(damage * Time.deltaTime);
         }
     }
 
@@ -59,31 +52,17 @@ public class LightDetectFollow : MonoBehaviour
             if (CheckObjectsBetween(character.transform.position, lightPosition))
             {
                 isInLight = true;
-                player.isRecoveryOn = false;
-                CancelInvoke("PlayerRecoveryOn");
-                StopCoroutine("CallDOTWeenPlay");
+                StopCallDOTWeenPlayCoroutine();
                 if (doLookAtPlayer == null || !doLookAtPlayer.IsPlaying())
                 {
                     doLookAtPlayer = transform.DOLookAt(character.transform.position, 0.5f);
                 }
                 dOTweenPath.DOPause();
-                //CallDOTWeenPauseCoroutine = StartCoroutine(CallDOTWeenPause(character.transform.position));
-                //StopAndStartCallDOTWeenPauseCoroutine();
-                //if (CallDOTWeenPlayCoroutine != null)
-                //    StopCoroutine(CallDOTWeenPlayCoroutine);
             }
             else
             {
+                StayCallDOTWeenPlayCoroutine();
                 isInLight = false;
-                Invoke("PlayerRecoveryOn", 3.0f);
-                StartCoroutine("CallDOTWeenPlay");
-                //if (CallDOTWeenPlayCoroutine.IsUnityNull())
-                //{
-                //    Debug.Log(CallDOTWeenPlayCoroutine);
-                //    if(CallDOTWeenPauseCoroutine != null)
-                //        StopCoroutine(CallDOTWeenPauseCoroutine);
-                //    CallDOTWeenPlayCoroutine = StartCoroutine(CallDOTWeenPlay());
-                //}
             }
         }
     }
@@ -92,11 +71,7 @@ public class LightDetectFollow : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             isInLight = false;
-            Invoke("PlayerRecoveryOn", 3.0f);
-            StartCoroutine("CallDOTWeenPlay");
-            //if (CallDOTWeenPauseCoroutine != null)
-            //    StopCoroutine(CallDOTWeenPauseCoroutine);
-            //StopAndStartCallDOTWeenPlayCoroutine();
+            StartCallDOTWeenPlayCoroutine();
         }
     }
     private bool CheckObjectsBetween(Vector3 startPosition, Vector3 endPosition)
@@ -108,7 +83,6 @@ public class LightDetectFollow : MonoBehaviour
         int layerMask = 1 << LayerMask.NameToLayer("Ground");
         RaycastHit[] hits = Physics.RaycastAll(ray, distance, layerMask);
         Debug.DrawLine(startPosition, endPosition, Color.red);
-        Debug.Log("CheckObjects");
 
         if (hits.Length == 0)
         {
@@ -118,16 +92,33 @@ public class LightDetectFollow : MonoBehaviour
         return false;
     }
 
-    private void PlayerRecoveryOn()
-    {
-        player.isRecoveryOn = true;
-    }
-
     private IEnumerator CallDOTWeenPlay()
     {
+        isCallDOTWeenPlayCoroutineOn = true;
         yield return new WaitForSeconds(3.0f);
         transform.DORotateQuaternion(curRotation, 0.5f);
         dOTweenPath.DOPlay();
+        isCallDOTWeenPlayCoroutineOn = false;
+    }
+
+    private void StayCallDOTWeenPlayCoroutine()
+    {
+        if(isInLight)
+        {
+            StartCallDOTWeenPlayCoroutine();
+        }
+    }
+
+    private void StartCallDOTWeenPlayCoroutine()
+    {
+        StopCallDOTWeenPlayCoroutine();
+        CallDOTWeenPlayCoroutine = StartCoroutine(CallDOTWeenPlay());
+    }
+
+    private void StopCallDOTWeenPlayCoroutine()
+    {
+        if (isCallDOTWeenPlayCoroutineOn)
+            StopCoroutine(CallDOTWeenPlayCoroutine);
     }
     #endregion
 }
