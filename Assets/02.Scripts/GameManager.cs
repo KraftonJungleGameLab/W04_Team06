@@ -27,23 +27,9 @@ public class GameManager : MonoBehaviour
     //----------------------------------------------------
 
     public Player player;
-    [HideInInspector] public Vector3 savePoint;
 
     private void Start()
     {
         player = GameObject.Find("Player").GetComponent<Player>();
-        savePoint = player.transform.position;
-    }
-
-    public void SetSavePoint(Vector3 savePosition)
-    {
-        savePoint = savePosition;
-    }
-
-    public void RespawnPlayer()
-    {
-        player.transform.position = savePoint;
-        Physics.SyncTransforms();
-        player.Init();
     }
 }
