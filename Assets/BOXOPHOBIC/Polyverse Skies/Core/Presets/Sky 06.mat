@@ -236,8 +236,8 @@ Material:
     - _EnableSunMoonMask: 1
     - _EnableTwinkling: 1
     - _EqHeight: 0.419
-    - _EquatorHeight: 0.577
-    - _EquatorSmoothness: 0.262
+    - _EquatorHeight: 0.606
+    - _EquatorSmoothness: 0.28
     - _Exposure: 0
     - _Fade: 0
     - _Float0: -1
@@ -274,7 +274,7 @@ Material:
     - _SkyPatternOverlay: 1
     - _SkyboxCat: 1
     - _SkyboxOffset: -0.506
-    - _SkyboxRotation: 0
+    - _SkyboxRotation: 72
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -284,7 +284,7 @@ Material:
     - _StarsBottomMask: 1
     - _StarsCat: 1
     - _StarsFlikerContrast: 1
-    - _StarsHeightMask: 0.2
+    - _StarsHeightMask: 0
     - _StarsHeigntMask: 1
     - _StarsHorizonMask: 1
     - _StarsIntensity: 5
@@ -292,8 +292,8 @@ Material:
     - _StarsMaskPower: 1
     - _StarsRotation: 360
     - _StarsRotationSpeed: 0.5
-    - _StarsSize: 0.417
-    - _StarsSunMask: 0.38
+    - _StarsSize: 0.1
+    - _StarsSunMask: 0
     - _SunCat: 1
     - _SunIntensity: 1
     - _SunRadiusB: 0
@@ -332,7 +332,7 @@ Material:
     - _Color2: {r: 0.059472326, g: 0.25068596, b: 0.8088235, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Eq: {r: 1, g: 0.6769777, b: 0.330882, a: 0}
-    - _EquatorColor: {r: 0.62985045, g: 0.927993, b: 0.990566, a: 1}
+    - _EquatorColor: {r: 0, g: 0.81949806, b: 1, a: 1}
     - _Ground: {r: 0.4779411, g: 0.43111518, b: 0.23545504, a: 0}
     - _GroundColor: {r: 0, g: 0.5, b: 1, a: 1}
     - _MoonColor: {r: 1, g: 1, b: 1, a: 1}
