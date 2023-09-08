@@ -5,18 +5,14 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public StateMachine stateMachine { get; private set; }
+    public float curHp;
+    public float recoveryTime = 3.0f;
+    public float recoveryHp = 30.0f;
     [HideInInspector] public bool isRecoveryOn = true;
     [HideInInspector] public IInteractableObject interactableObject;
     private PlayerController playerController {get; set;}
-
-    [Header("PlayerHp")]
-    public float curHp;
-    public float recoveryStartTime = 3.0f;
-    public float recoveryHp = 30.0f;
     private float maxHp = 100;
-    private Coroutine playerRecoveryCoroutine;
-    private bool isRecoveryCoroutineOn;
-
+    // Status
     public void SetController(PlayerController _playerController){
         playerController = _playerController;
     }
@@ -29,21 +25,17 @@ public class Player : MonoBehaviour
     void Start()
     {
         InitStateMachine();
-        Init();
-    }
-
-    public void Init()
-    {
         curHp = maxHp;
-        isRecoveryOn = true;
-        isRecoveryCoroutineOn = false;
-        stateMachine.ChangeState(StateName.Idle);
     }
 
     void Update()
     {
         stateMachine?.UpdateState();
         RecoveryHealth();
+        if(curHp <= 0)
+        {
+
+        }
     }
 
     void FixedUpdate()
@@ -64,8 +56,7 @@ public class Player : MonoBehaviour
 
     public void RecoveryHealth()
     {
-        if(isRecoveryOn 
-            && curHp != maxHp)
+        if(isRecoveryOn)
         {
             curHp += 30.0f * Time.deltaTime;
 
@@ -74,44 +65,5 @@ public class Player : MonoBehaviour
                 curHp = maxHp;
             }
         }
-    }
-
-    public void DamageHealth(float damage)
-    {
-        curHp -= damage;
-        isRecoveryOn = false;
-        if (curHp <= 0f)
-        {
-            Dead();
-            return;
-        }
-
-        StartRecoveryCoroutine();
-    }
-
-    public void Dead()
-    {
-        StopRecoveryCoroutine();
-        GameManager.Instance.RespawnPlayer();
-    }
-
-    private IEnumerator RecoveryOnAfterSeconds(float seconds)
-    {
-        isRecoveryCoroutineOn = true;
-        yield return new WaitForSeconds(seconds);
-        isRecoveryOn = true;
-        isRecoveryCoroutineOn = false;
-    }
-
-    private void StartRecoveryCoroutine()
-    {
-        StopRecoveryCoroutine();
-        playerRecoveryCoroutine = StartCoroutine(RecoveryOnAfterSeconds(recoveryStartTime));
-    }
-
-    private void StopRecoveryCoroutine()
-    {
-        if (isRecoveryCoroutineOn)
-            StopCoroutine(playerRecoveryCoroutine);
     }
 }

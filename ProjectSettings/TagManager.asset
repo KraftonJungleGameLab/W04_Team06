@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Interactable
   - EnemyShadow
+  - EnemyLight
+  - WayPoints
   layers:
   - Default
   - TransparentFX
