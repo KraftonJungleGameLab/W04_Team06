@@ -22,7 +22,9 @@ public enum StateName
     Move,
     Jump,
     GrabIdle,
-    GrabMove
+    GrabMove,
+    EquipIdle,
+    EquipMove
 }
 
 public class StateMachine

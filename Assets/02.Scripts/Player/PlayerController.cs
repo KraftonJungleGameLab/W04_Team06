@@ -28,7 +28,6 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public Vector3 inputDirection;
     [HideInInspector] public Vector3 moveDirection;
     [HideInInspector] public bool isGrounded;
-    public float interactGrabSlowSpeedRate = 0.5f;
 
     private Camera playerCamera;
 

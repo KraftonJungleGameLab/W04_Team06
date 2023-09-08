@@ -39,9 +39,7 @@ public class GrabMoveState : BaseState
     public override void OnFixedUpdateState()
     {
         Controller.MoveFixedUpdate();
-
-        if (movableObject.isHeavy)
-            Controller.moveVelocity *= Controller.interactGrabSlowSpeedRate;
+        Controller.moveVelocity *= movableObject.slowRate;
 
         Vector3 distance = movableObject.transform.position - movableObject.defaultPosition;
         if (distance.x < movableObject.minMovableRange.x)
