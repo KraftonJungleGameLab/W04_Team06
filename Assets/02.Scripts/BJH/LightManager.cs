@@ -1,22 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Boxophobic.StyledGUI;
 
 public class LightManager : MonoBehaviour
-{
+{        
     public Color fogColor;
-    public float fogDensity;
-    // Start is called before the first frame update
-    void Start()
-    {
-        fogColor = RenderSettings.fogColor;
-        fogDensity = RenderSettings.fogDensity;
+    public float fogDensity;      
+    private Animator anim;
 
+    private void Start()
+    {
+        anim = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (anim.GetBool("LightBlend"))
+        {
+            RenderSettings.fogColor = fogColor;
+            RenderSettings.fogDensity = fogDensity;
+        }        
+    }
+
+    public void LightBlend()
+    {
+        anim.SetBool("LightBlend", true);
     }
 }
+
+
