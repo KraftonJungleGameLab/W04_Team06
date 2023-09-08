@@ -64,6 +64,7 @@ public class EquipIdleState : BaseState
     {
         if (InputData.IsButtonOn(Controller.input.buttonsDown, InputData.INTERACTIONBUTTON))
         {
+            Controller.player.interactableObject = null;
             equippableObject.transform.parent = equippableObject.defaultParent;
             Controller.player.stateMachine.ChangeState(StateName.Idle);
             return true;
