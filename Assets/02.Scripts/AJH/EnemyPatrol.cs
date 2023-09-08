@@ -6,10 +6,12 @@ using UnityEngine.AI;
 public class EnemyPatrol : StateMachineBehaviour
 {
     private float timer;
-    private List<Transform> wayPoints = new List<Transform>();
     private NavMeshAgent agent;
     private Transform player;
-    private float chaseRange = 8;
+    private List<Transform> wayPoints = new List<Transform>();
+    [SerializeField]private float chaseRange = 8;
+   
+
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -17,12 +19,16 @@ public class EnemyPatrol : StateMachineBehaviour
         agent = animator.GetComponent<NavMeshAgent>();
         agent.speed = 1.5f;
         timer = 0;
-        GameObject goTo = GameObject.FindGameObjectWithTag("WayPoints");
-        foreach(Transform t in goTo.transform)
+        WayPointsManager wayPointManager = animator.GetComponent<WayPointsManager>();
+        if(wayPointManager != null)
         {
-            wayPoints.Add(t);
+            wayPoints = wayPointManager.WayPoints;
         }
-
+        
+        if(wayPoints.Count == 0)
+        {
+            return;
+        }
         agent.SetDestination(wayPoints[Random.Range(0,wayPoints.Count)].position);
     }
 
