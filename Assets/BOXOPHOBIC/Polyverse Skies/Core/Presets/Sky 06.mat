@@ -14,6 +14,7 @@ Material:
   - _ENABLEBUILTINFOG_ON
   - _ENABLECLOUDSROTATION_ON
   - _ENABLEMOON_ON
+  - _ENABLEPATTERNOVERLAY_ON
   - _ENABLESTARSTWINKLING_ON
   - _ENABLESTARS_ON
   m_InvalidKeywords:
@@ -223,7 +224,7 @@ Material:
     - _EnableFogMessage: 0
     - _EnableMoon: 1
     - _EnablePattern: 1
-    - _EnablePatternOverlay: 0
+    - _EnablePatternOverlay: 1
     - _EnableSkyPatternOverlay: 1
     - _EnableStars: 1
     - _EnableStarsHeightMask: 0
@@ -265,7 +266,7 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _PatternCat: 1
-    - _PatternContrast: 1.102
+    - _PatternContrast: 0.683
     - _PatternOverlay: 1
     - _RoatationSpeed: 0.4
     - _Rotation: 0
@@ -292,7 +293,7 @@ Material:
     - _StarsMaskPower: 1
     - _StarsRotation: 360
     - _StarsRotationSpeed: 0.5
-    - _StarsSize: 0.1
+    - _StarsSize: 0.311
     - _StarsSunMask: 0
     - _SunCat: 1
     - _SunIntensity: 1
