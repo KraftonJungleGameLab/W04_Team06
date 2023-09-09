@@ -54,7 +54,7 @@ public class GrabIdleState : BaseState
 
     private bool CanGrabMove()
     {
-        if (Controller.isGrounded
+        if (Controller.isGrounded && Controller.isControllable
             && Controller.input.direction != Vector3.zero)
         {
             Controller.player.stateMachine.ChangeState(StateName.GrabMove);
@@ -65,7 +65,8 @@ public class GrabIdleState : BaseState
 
     private bool CanIdle()
     {
-        if (InputData.IsButtonOn(Controller.input.buttonsUp, InputData.INTERACTIONBUTTON))
+        if (InputData.IsButtonOn(Controller.input.buttonsUp, InputData.INTERACTIONBUTTON)
+            || !InputData.IsButtonOn(Controller.input.buttons, InputData.INTERACTIONBUTTON))
         {
             Controller.animator.SetBool("Grab", false);
             movableObject.transform.parent = movableObject.defaultParent;

@@ -60,7 +60,7 @@ public class MoveState : BaseState
 
     private bool CanJump()
     {
-        if (Controller.isGrounded
+        if (Controller.isGrounded && Controller.isControllable
             && InputData.IsButtonOn(Controller.input.buttonsDown, InputData.JUMPBUTTON))
         {
             Controller.player.stateMachine.ChangeState(StateName.Jump);

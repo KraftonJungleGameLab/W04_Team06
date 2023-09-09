@@ -47,7 +47,7 @@ public class JumpState : BaseState
 
     private bool CanMove()
     {
-        if(Controller.isGrounded
+        if(Controller.isGrounded && Controller.isControllable
             && Controller.gravityVelocity.y < 0.1f
             && Controller.input.direction != Vector3.zero)
         {

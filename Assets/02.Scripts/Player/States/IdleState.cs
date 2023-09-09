@@ -46,7 +46,7 @@ public class IdleState : BaseState
 
     private bool CanMove()
     {
-        if (Controller.isGrounded
+        if (Controller.isGrounded && Controller.isControllable
             && Controller.input.direction != Vector3.zero)
         {
             Controller.player.stateMachine.ChangeState(StateName.Move);
@@ -57,7 +57,7 @@ public class IdleState : BaseState
 
     private bool CanJump()
     {
-        if(Controller.isGrounded
+        if (Controller.isGrounded && Controller.isControllable
             && InputData.IsButtonOn(Controller.input.buttonsDown, InputData.JUMPBUTTON))
         {
             Controller.player.stateMachine.ChangeState(StateName.Jump);
@@ -69,7 +69,7 @@ public class IdleState : BaseState
 
     private bool CanInteract()
     {
-        if(Controller.isGrounded
+        if (Controller.isGrounded && Controller.isControllable
             && Controller.player.interactableObject != null
             && InputData.IsButtonOn(Controller.input.buttonsDown, InputData.INTERACTIONBUTTON))
         {
