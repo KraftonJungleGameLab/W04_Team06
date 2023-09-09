@@ -21,6 +21,7 @@ public class JumpState : BaseState
 
     public override void OnEnterState()
     {
+        Controller.animator.SetBool("Jump", true);
         Controller.gravityVelocity = Vector3.up * Controller.jumpImpulse;
     }
 
@@ -35,12 +36,13 @@ public class JumpState : BaseState
 
     public override void OnFixedUpdateState()
     {
-
+        Controller.CheckHead();
     }
 
     public override void OnExitState()
     {
-
+        Controller.animator.SetBool("JumpLand", false);
+        Controller.animator.SetBool("Jump", false);
     }
 
     private bool CanMove()

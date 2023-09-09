@@ -26,6 +26,8 @@ public class EquipMoveState : BaseState
     {
         Controller.animator.SetBool("Move", true);
         equippableObject = (EquippableObject)Controller.player.interactableObject;
+        equippableObject.transform.parent = Controller.animator.transform;
+        equippableObject.transform.localPosition = equippableObject.equipLocalPosition;
     }
 
     public override void OnUpdateState()
@@ -63,6 +65,7 @@ public class EquipMoveState : BaseState
     {
         if (InputData.IsButtonOn(Controller.input.buttonsDown, InputData.INTERACTIONBUTTON))
         {
+            Controller.player.interactableObject = null;
             equippableObject.transform.parent = equippableObject.defaultParent;
             Controller.player.stateMachine.ChangeState(StateName.Idle);
             return true;
