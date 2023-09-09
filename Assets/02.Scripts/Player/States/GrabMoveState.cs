@@ -89,6 +89,15 @@ public class GrabMoveState : BaseState
                 Controller.moveVelocity.z = 0f;
             }
         }
+
+        if(Controller.inputDirection.magnitude > 0.1f)
+        {
+            Vector3 direction = Controller.moveDirection;
+            Vector3 localFowardDirection = Controller.animator.transform.forward;
+            localFowardDirection.y = 0.0f;
+            Controller.animator.SetFloat("GrabHorizontal", direction.x);
+            Controller.animator.SetFloat("GrabVertical", direction.z);
+        }
     }
 
     public override void OnExitState()
@@ -111,6 +120,7 @@ public class GrabMoveState : BaseState
     {
         if (InputData.IsButtonOn(Controller.input.buttonsUp, InputData.INTERACTIONBUTTON))
         {
+            Controller.animator.SetBool("Grab", false);
             movableObject.transform.parent = movableObject.defaultParent;
             Controller.player.stateMachine.ChangeState(StateName.Idle);
             return true;
