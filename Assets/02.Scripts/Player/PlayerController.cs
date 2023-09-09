@@ -30,6 +30,8 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public bool isGrounded;
 
     private Camera playerCamera;
+    private int playerLayerMask;
+    private int groundLayerMask;
 
     void Awake()
     {
@@ -38,6 +40,8 @@ public class PlayerController : MonoBehaviour
         controller = GetComponent<CharacterController>();
         animator = GetComponentInChildren<Animator>();
         playerCamera = Camera.main;
+        playerLayerMask = 1 << LayerMask.NameToLayer("Player");
+        groundLayerMask = 1 << LayerMask.NameToLayer("Ground");
     }
 
     private void Start()
@@ -56,6 +60,7 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         CheckGrounded();
+        CheckLanding();
         FixedUpdatePlayerMove();
     }
 
@@ -74,12 +79,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void CheckHead()
+    public void CheckHead()
     {
-        float maxDistance = 0.5f;
-        Debug.DrawRay(transform.position, Vector3.down * maxDistance, Color.red);
-        Ray ray = new Ray(this.transform.position, Vector3.up);
-        gravityVelocity.y = -0.1f;
+        float maxDistance = 0.1f;
+        Vector3 headPosition = transform.position + Vector3.up * controller.height;
+        Debug.DrawRay(headPosition, Vector3.up * maxDistance, Color.red);
+        Ray ray = new Ray(headPosition, Vector3.up);
+        if(Physics.Raycast(ray, maxDistance, groundLayerMask, QueryTriggerInteraction.Ignore))
+        {
+            if(gravityVelocity.y > 0.0f)
+            {
+                gravityVelocity.y = 0.0f;
+            }
+        }
     }
 
     private void CheckGrounded()
@@ -87,13 +99,23 @@ public class PlayerController : MonoBehaviour
         if (controller.isGrounded)
         {
             isGrounded = true;
+            animator.SetBool("Grounded", isGrounded);
             return;
         }
 
-        float maxDistance = 0.5f;
+        float maxDistance = 0.1f;
         Debug.DrawRay(transform.position, Vector3.down * maxDistance, Color.red);
         Ray ray = new Ray(this.transform.position, Vector3.down);
-        isGrounded = Physics.Raycast(ray, maxDistance);
+        isGrounded = Physics.Raycast(ray, maxDistance, groundLayerMask, QueryTriggerInteraction.Ignore);
+        animator.SetBool("Grounded", isGrounded);
+    }
+
+    public void CheckLanding()
+    {
+        float maxDistance = 1.0f;
+        Debug.DrawRay(transform.position, Vector3.down * maxDistance, Color.green);
+        Ray ray = new Ray(this.transform.position, Vector3.down);
+        animator.SetBool("JumpLand", Physics.Raycast(ray, maxDistance, groundLayerMask, QueryTriggerInteraction.Ignore));
     }
 
     private void FixedUpdatePlayerMove()
@@ -109,11 +131,16 @@ public class PlayerController : MonoBehaviour
 
         if(inputDirection.magnitude > 0.1f)
         {
+            animator.SetBool("Move", true);
             Vector3 forwardDirection = playerCamera.transform.forward;
             Vector3 rightDirection = playerCamera.transform.right;
             Vector3 rotateDirection = (forwardDirection * input.direction.z + rightDirection * input.direction.x).normalized;
             rotateDirection.y = 0f;
             moveDirection = rotateDirection;
+        }
+        else
+        {
+            animator.SetBool("Move", false);
         }
     }
     
