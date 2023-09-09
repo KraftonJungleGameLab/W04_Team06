@@ -21,6 +21,7 @@ public class JumpState : BaseState
 
     public override void OnEnterState()
     {
+        Controller.animator.SetTrigger("Jump");
         Controller.gravityVelocity = Vector3.up * Controller.jumpImpulse;
     }
 

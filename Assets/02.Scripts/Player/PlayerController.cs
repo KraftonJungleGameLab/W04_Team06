@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
     {
         if (isGrounded == false)
         {
-            if (gravityVelocity.y > gravity && gravityVelocity.y < 0)
+            if (gravityVelocity.y > gravity)
             {
                 gravityVelocity -= Vector3.up * gravityAcceleration * Time.fixedDeltaTime;
             }
@@ -72,6 +72,14 @@ public class PlayerController : MonoBehaviour
                 gravityVelocity -= Vector3.up * gravity * Time.fixedDeltaTime;
             }
         }
+    }
+
+    private void CheckHead()
+    {
+        float maxDistance = 0.5f;
+        Debug.DrawRay(transform.position, Vector3.down * maxDistance, Color.red);
+        Ray ray = new Ray(this.transform.position, Vector3.up);
+        gravityVelocity.y = -0.1f;
     }
 
     private void CheckGrounded()
