@@ -38,6 +38,7 @@ public class Player : MonoBehaviour
         isRecoveryOn = true;
         isRecoveryCoroutineOn = false;
         stateMachine.ChangeState(StateName.Idle);
+        playerController.isControllable = true;
     }
 
     void Update()

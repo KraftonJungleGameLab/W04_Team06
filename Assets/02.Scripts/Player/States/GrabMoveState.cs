@@ -92,9 +92,9 @@ public class GrabMoveState : BaseState
 
         if(Controller.inputDirection.magnitude > 0.1f)
         {
-            Vector3 direction = Controller.moveDirection;
             Vector3 localFowardDirection = Controller.animator.transform.forward;
-            localFowardDirection.y = 0.0f;
+            Vector3 localRightDirection = Controller.animator.transform.right;
+            Vector3 direction = (localFowardDirection * Controller.moveDirection.z + localRightDirection * Controller.moveDirection.x).normalized * -1.0f;
             Controller.animator.SetFloat("GrabHorizontal", direction.x);
             Controller.animator.SetFloat("GrabVertical", direction.z);
         }
@@ -118,7 +118,8 @@ public class GrabMoveState : BaseState
 
     private bool CanIdle()
     {
-        if (InputData.IsButtonOn(Controller.input.buttonsUp, InputData.INTERACTIONBUTTON))
+        if (InputData.IsButtonOn(Controller.input.buttonsUp, InputData.INTERACTIONBUTTON)
+            || !InputData.IsButtonOn(Controller.input.buttons, InputData.INTERACTIONBUTTON))
         {
             Controller.animator.SetBool("Grab", false);
             movableObject.transform.parent = movableObject.defaultParent;

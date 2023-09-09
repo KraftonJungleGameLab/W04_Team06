@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public Vector3 inputDirection;
     [HideInInspector] public Vector3 moveDirection;
     [HideInInspector] public bool isGrounded;
+    public bool isControllable;
 
     private Camera playerCamera;
     private int playerLayerMask;
@@ -49,6 +50,7 @@ public class PlayerController : MonoBehaviour
         moveVelocity = Vector3.zero;
         gravityVelocity = Vector3.zero;
         finalVelocity = Vector3.zero;
+        isControllable = true;
     }
 
     private void Update()
@@ -112,6 +114,12 @@ public class PlayerController : MonoBehaviour
 
     public void CheckLanding()
     {
+        if(isGrounded)
+        {
+            animator.SetBool("JumpLand", true);
+            return;
+        }
+
         float maxDistance = 1.0f;
         Debug.DrawRay(transform.position, Vector3.down * maxDistance, Color.green);
         Ray ray = new Ray(this.transform.position, Vector3.down);
@@ -159,5 +167,10 @@ public class PlayerController : MonoBehaviour
             Quaternion moveRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
             animator.transform.localRotation = Quaternion.Lerp(animator.transform.localRotation, moveRotation, rotationVelocity * Time.fixedDeltaTime);
         }
+    }
+
+    public void SetIsControllable(bool isControllable)
+    {
+        this.isControllable = isControllable;
     }
 }
