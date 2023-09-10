@@ -34,7 +34,7 @@ public class EquippableObject : MonoBehaviour, IInteractableObject
         {
             PlayerController playerController = other.GetComponent<PlayerController>();
             if (playerController.player.interactableObject == (IInteractableObject)this
-                && (playerController.player.stateMachine.CurrentState.GetType() != typeof(EquipIdleState) || playerController.player.stateMachine.CurrentState.GetType() != typeof(EquipIdleState)))
+                && (playerController.player.stateMachine.CurrentState.GetType() != typeof(EquipIdleState) || playerController.player.stateMachine.CurrentState.GetType() != typeof(EquipMoveState)))
             {
                 playerController.player.interactableObject = null;
             }
