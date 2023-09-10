@@ -92,11 +92,19 @@ public class GrabMoveState : BaseState
 
         if(Controller.inputDirection.magnitude > 0.1f)
         {
-            Vector3 localFowardDirection = Controller.animator.transform.forward;
-            Vector3 localRightDirection = Controller.animator.transform.right;
-            Vector3 direction = (localFowardDirection * Controller.moveDirection.z + localRightDirection * Controller.moveDirection.x).normalized * -1.0f;
-            Controller.animator.SetFloat("GrabHorizontal", direction.x);
-            Controller.animator.SetFloat("GrabVertical", direction.z);
+            
+            Vector3 localDirection = Controller.animator.transform.forward + Controller.animator.transform.right;
+            Vector3 direction = Quaternion.Euler(Controller.animator.transform.localRotation.eulerAngles) * Controller.moveDirection;
+            float rotationY = Controller.animator.transform.localRotation.eulerAngles.y;
+            int reverseValue = 1;
+            if ((45.0f < rotationY && rotationY <= 135.0f) 
+                || (225.0f <= rotationY && rotationY < 315.0f))
+            {
+                reverseValue = -1;
+            }
+
+            Controller.animator.SetFloat("GrabHorizontal", direction.x * reverseValue);
+            Controller.animator.SetFloat("GrabVertical", direction.z * reverseValue);
         }
     }
 
@@ -122,7 +130,7 @@ public class GrabMoveState : BaseState
             || !InputData.IsButtonOn(Controller.input.buttons, InputData.INTERACTIONBUTTON))
         {
             Controller.animator.SetBool("Grab", false);
-            movableObject.transform.parent = movableObject.defaultParent;
+            movableObject.transform.parent.parent = movableObject.defaultParent;
             Controller.player.stateMachine.ChangeState(StateName.Idle);
             return true;
         }
