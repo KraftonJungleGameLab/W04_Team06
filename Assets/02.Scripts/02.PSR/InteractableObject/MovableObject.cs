@@ -7,6 +7,8 @@ public class MovableObject : MonoBehaviour, IInteractableObject
     public Vector3 minMovableRange;
     public Vector3 maxMovableRange;
     public float slowRate = 0.5f;
+    public Vector3 playerGrabPosition;
+    public Quaternion playerGrabRotation;
 
     [HideInInspector] public Vector3 defaultPosition;
     [HideInInspector] public Transform defaultParent;
@@ -15,8 +17,8 @@ public class MovableObject : MonoBehaviour, IInteractableObject
 
     private void Start()
     {
-        defaultPosition = transform.position;
-        defaultParent = transform.parent;
+        defaultPosition = transform.parent.position;
+        defaultParent = transform.parent.parent;
     }
 
     private void OnTriggerStay(Collider other)
