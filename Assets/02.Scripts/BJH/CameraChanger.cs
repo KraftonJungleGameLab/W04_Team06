@@ -10,6 +10,10 @@ public class CameraChanger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             GameObject.Find("CameraManager").GetComponent<CameraManager>().SwitchCamera(cameraIndex);
+            if(cameraIndex == 3)
+            {
+                GameObject.Find("LightManager").GetComponent<LightManager>().LightBlend();
+            }
         }
     }
 }
