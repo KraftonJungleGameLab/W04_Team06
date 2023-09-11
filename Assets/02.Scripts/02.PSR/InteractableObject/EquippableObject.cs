@@ -10,6 +10,11 @@ public class EquippableObject : MonoBehaviour, IInteractableObject
 
     private StateName interactState = StateName.EquipIdle;
 
+    private void Awake()
+    {
+        GameManager.Instance.InitAction += InitObject;
+    }
+
     private void Start()
     {
         defaultPosition = transform.position;
@@ -44,5 +49,11 @@ public class EquippableObject : MonoBehaviour, IInteractableObject
     public StateName GetInteractState()
     {
         return interactState;
+    }
+
+    public void InitObject()
+    {
+        transform.parent.parent = defaultParent;
+        transform.parent.position = defaultPosition;
     }
 }
