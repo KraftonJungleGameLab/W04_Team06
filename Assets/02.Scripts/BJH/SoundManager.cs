@@ -43,6 +43,11 @@ public class SoundManager : MonoBehaviour
         StartCoroutine(StartAudio(idx, blendSeconds));
     }
 
+    public void EndAudio()
+    {
+        StartCoroutine(StopAudio(4, 2f));
+    }
+
     public IEnumerator StartAudio(int idx, float blendSeconds)
     {
         float seconds = 0.0f;

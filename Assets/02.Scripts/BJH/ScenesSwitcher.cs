@@ -13,6 +13,7 @@ public class ScenesSwitcher : MonoBehaviour
     private void Start()
     {
         Invoke("PlayerControllerOff", 0.2f);
+        Screen.SetResolution(1920, 1080, true);
     }
 
     public void Update()
