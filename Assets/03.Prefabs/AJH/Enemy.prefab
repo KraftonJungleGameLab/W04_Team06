@@ -90,6 +90,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 646181091af19144fb140b919c3f90a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultPosition: {x: 0, y: 0, z: 0}
+  animator: {fileID: 0}
+  damage: 20
   wayPoints: []
 --- !u!1001 &701384202291527169
 PrefabInstance:
@@ -168,6 +171,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: shadow
       objectReference: {fileID: 0}
+    - target: {fileID: 3236599206912284862, guid: 19864d94b00a0d14aa986bdeced04e8f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ddb1d51867da801469ec450325391569, type: 2}
     - target: {fileID: 3236599206912284862, guid: 19864d94b00a0d14aa986bdeced04e8f,
         type: 3}
       propertyPath: m_Materials.Array.data[1]

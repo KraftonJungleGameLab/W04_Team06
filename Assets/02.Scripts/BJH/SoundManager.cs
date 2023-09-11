@@ -52,7 +52,7 @@ public class SoundManager : MonoBehaviour
             seconds += Time.deltaTime;
             yield return null;
         }
-        audioSources[idx].volume = 0.5f;
+        audioSources[idx].volume = 0.2f;
     }
 
     public IEnumerator StopAudio(int idx, float blendSeconds)
