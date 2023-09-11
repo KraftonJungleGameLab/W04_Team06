@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
 {
     public StateMachine stateMachine { get; private set; }
     [HideInInspector] public bool isRecoveryOn = true;
-    [HideInInspector] public IInteractableObject interactableObject;
+    public IInteractableObject interactableObject;
     private PlayerController playerController {get; set;}
 
     [Header("PlayerHp")]
