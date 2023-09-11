@@ -6,7 +6,7 @@ public class PlayerSound : MonoBehaviour
 {
     [SerializeField] AudioSource footRAudio;
     [SerializeField] AudioSource footLAudio;
-    [SerializeField] AudioSource dragAudio;
+    public AudioSource dragAudio;
 
     public void FootR()
     {

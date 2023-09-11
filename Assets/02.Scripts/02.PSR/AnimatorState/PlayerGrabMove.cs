@@ -16,11 +16,14 @@ public class PlayerGrabMove : StateMachineBehaviour
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         Vector3 grabMoveDirection = new Vector3(animator.GetFloat("GrabHorizontal"), 0.0f, animator.GetFloat("GrabVertical"));
-        if(grabMoveDirection.magnitude > 0.1f)
+
+        if (grabMoveDirection.magnitude > 0.1f
+            && !playerSound.dragAudio.isPlaying)
         {
-            playerSound.DragOn();
+                playerSound.DragOn();
         }
-        else
+        else if(grabMoveDirection.magnitude < 0.1f
+            && playerSound.dragAudio.isPlaying)
         {
             playerSound.DragOff();
         }
