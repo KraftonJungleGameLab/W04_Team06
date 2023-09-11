@@ -7,12 +7,15 @@ public class Player : MonoBehaviour
     public StateMachine stateMachine { get; private set; }
     [HideInInspector] public bool isRecoveryOn = true;
     public IInteractableObject interactableObject;
+    public PlayerDeadEffect playerDeadEffect;
     private PlayerController playerController {get; set;}
+    [SerializeField] private Material bodyMaterial;
 
     [Header("PlayerHp")]
     public float curHp;
     public float recoveryStartTime = 3.0f;
     public float recoveryHp = 30.0f;
+    public bool isDead = false;
     private float maxHp = 100;
     private Coroutine playerRecoveryCoroutine;
     private bool isRecoveryCoroutineOn;
@@ -34,12 +37,14 @@ public class Player : MonoBehaviour
 
     public void Init()
     {
+        isDead = false;
         curHp = maxHp;
         isRecoveryOn = true;
         isRecoveryCoroutineOn = false;
         stateMachine.ChangeState(StateName.Idle);
         playerController.isControllable = true;
         interactableObject = null;
+        ChangeBodyColor();
     }
 
     void Update()
@@ -78,8 +83,9 @@ public class Player : MonoBehaviour
             && curHp != maxHp)
         {
             curHp += 30.0f * Time.deltaTime;
+            ChangeBodyColor();
 
-            if(curHp > maxHp)
+            if (curHp > maxHp)
             {
                 curHp = maxHp;
             }
@@ -88,7 +94,11 @@ public class Player : MonoBehaviour
 
     public void DamageHealth(float damage)
     {
+        if (isDead)
+            return;
+
         curHp -= damage;
+        ChangeBodyColor();
         isRecoveryOn = false;
         if (curHp <= 0f)
         {
@@ -99,10 +109,17 @@ public class Player : MonoBehaviour
         StartRecoveryCoroutine();
     }
 
+    private void ChangeBodyColor()
+    {
+        float hpRate = (1 - curHp / maxHp);
+        bodyMaterial.color = new Color(hpRate, hpRate, hpRate, 1.0f);
+    }
+
     public void Dead()
     {
         StopRecoveryCoroutine();
-        GameManager.Instance.InitAction();
+        playerDeadEffect.PlayDeadEffect();
+        isDead = true;
     }
 
     public void RespawnPlayer()
