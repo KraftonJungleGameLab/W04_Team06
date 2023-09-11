@@ -5,19 +5,24 @@ using UnityEngine;
 public class WayPointsManager : MonoBehaviour
 {
     #region PublicVariables
-
+   
     #endregion
 
     #region PrivateVariables
     [SerializeField] private List<Transform> wayPoints = new List<Transform>();
     public List<Transform> WayPoints => wayPoints;
-#endregion
+    #endregion
 
-#region PublicMethods
+    #region PublicMethods
 
-#endregion
+    #endregion
 
-#region PrivateMethods
+    #region PrivateMethods
+
+    public void Awake()
+    {
+
+    }
     void Start()
     {
         
