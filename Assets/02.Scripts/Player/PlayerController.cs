@@ -137,7 +137,8 @@ public class PlayerController : MonoBehaviour
     {
         inputDirection = new Vector3(input.direction.x, 0.0f, input.direction.z).normalized;
 
-        if(inputDirection.magnitude > 0.1f)
+        if(inputDirection.magnitude > 0.1f 
+            && isControllable)
         {
             animator.SetBool("Move", true);
             Vector3 forwardDirection = playerCamera.transform.forward;

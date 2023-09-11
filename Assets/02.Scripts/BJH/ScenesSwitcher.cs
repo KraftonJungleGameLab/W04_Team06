@@ -10,6 +10,11 @@ public class ScenesSwitcher : MonoBehaviour
     public bool isSound = true;
     public int nestSceneNum;
 
+    private void Start()
+    {
+        Invoke("PlayerControllerOff", 0.2f);
+    }
+
     public void Update()
     {
         if (nextScene)
@@ -31,5 +36,15 @@ public class ScenesSwitcher : MonoBehaviour
     public void EndGame()
     {
         Application.Quit();
+    }
+
+    public void PlayerControllerOff()
+    {
+        GameManager.Instance.player.GetComponent<PlayerController>().isControllable = false;
+    }
+
+    public void PlayerControllerOn()
+    {
+        GameManager.Instance.player.GetComponent<PlayerController>().isControllable = true;
     }
 }
