@@ -5,4 +5,5 @@ using UnityEngine;
 public interface IInteractableObject
 {
     public StateName GetInteractState();
+    public void InitObject();
 }
