@@ -17,7 +17,7 @@ public class InteractableSwitch : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            if (InputData.IsButtonOn(controller.input.buttonsDown, InputData.INTERACTIONBUTTON))
+            if (InputData.IsButtonOn(controller.input.buttons, InputData.INTERACTIONBUTTON))
             {
                 lightObject.GetComponent<VolumetricLightBeamHD>().enabled = false;
                 lightObject.GetComponent<VolumetricShadowHD>().enabled = false;

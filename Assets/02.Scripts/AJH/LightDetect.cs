@@ -47,7 +47,9 @@ public class LightDetect : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             
-            if(CheckObjectsBetween(character.transform.position, lightPosition))
+            if(CheckObjectsBetween(character.transform.position, lightPosition)
+                && GameManager.Instance.player.stateMachine.CurrentState.GetType() != typeof(EquipMoveState) 
+                && GameManager.Instance.player.stateMachine.CurrentState.GetType() != typeof(EquipIdleState))
             {
                 isInLight = true;
             }

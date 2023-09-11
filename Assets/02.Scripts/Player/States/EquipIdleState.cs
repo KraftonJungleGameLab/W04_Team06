@@ -28,6 +28,7 @@ public class EquipIdleState : BaseState
         equippableObject = (EquippableObject)Controller.player.interactableObject;
         equippableObject.transform.parent = Controller.animator.transform;
         equippableObject.transform.localPosition = equippableObject.equipLocalPosition;
+        equippableObject.transform.localRotation = equippableObject.equipLocalRotation;
     }
 
     public override void OnUpdateState()
