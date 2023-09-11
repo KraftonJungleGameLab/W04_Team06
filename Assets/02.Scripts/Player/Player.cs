@@ -69,6 +69,7 @@ public class Player : MonoBehaviour
         playerController.animator.SetBool("Move", false);
         playerController.animator.SetBool("Jump", false);
         playerController.animator.SetBool("Grab", false);
+
     }
 
     public void RecoveryHealth()
