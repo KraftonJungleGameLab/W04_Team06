@@ -155,7 +155,8 @@ public class PlayerController : MonoBehaviour
     
     public void MoveFixedUpdate()
     {
-        if (inputDirection.magnitude > 0.1f)
+        if (inputDirection.magnitude > 0.1f
+            && isControllable)
         {
             moveVelocity = moveDirection * moveSpeed * Time.fixedDeltaTime;
         }
@@ -163,7 +164,8 @@ public class PlayerController : MonoBehaviour
 
     public void RotateFixedUpdate()
     {
-        if (inputDirection.magnitude > 0.1f)
+        if (inputDirection.magnitude > 0.1f
+            && isControllable)
         {
             Quaternion moveRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
             animator.transform.localRotation = Quaternion.Lerp(animator.transform.localRotation, moveRotation, rotationVelocity * Time.fixedDeltaTime);

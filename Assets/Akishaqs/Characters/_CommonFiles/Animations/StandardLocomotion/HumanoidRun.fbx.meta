@@ -520,14 +520,14 @@ ModelImporter:
       curves: []
       events:
       - time: 0.40703523
-        functionName: FootL
+        functionName: Foot
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.89447165
-        functionName: FootR
+        functionName: Foot
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
