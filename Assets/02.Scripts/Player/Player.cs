@@ -64,6 +64,13 @@ public class Player : MonoBehaviour
         stateMachine.AddState(StateName.EquipMove, new EquipMoveState(playerController));
     }
 
+    private void InitAnimator()
+    {
+        playerController.animator.SetBool("Move", false);
+        playerController.animator.SetBool("Jump", false);
+        playerController.animator.SetBool("Grab", false);
+    }
+
     public void RecoveryHealth()
     {
         if(isRecoveryOn 
@@ -102,6 +109,7 @@ public class Player : MonoBehaviour
         transform.position = GameManager.Instance.savePoint;
         Physics.SyncTransforms();
         Init();
+        InitAnimator();
     }
 
     private IEnumerator RecoveryOnAfterSeconds(float seconds)
