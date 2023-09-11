@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/01.Scenes/BJH/TestTerrain.unity
-    guid: 3740c9b74d38d894180358c3abfa7795
+    path: Assets/01.Scenes/01.Main.unity
+    guid: 9b834b29001682646b4f8fe07202ec09
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: ef7e152d79ca00c47a0d995fd3ead65c,
       type: 2}
