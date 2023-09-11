@@ -120,6 +120,7 @@ public class Player : MonoBehaviour
         StopRecoveryCoroutine();
         playerDeadEffect.PlayDeadEffect();
         isDead = true;
+        playerController.moveVelocity = Vector3.zero;
     }
 
     public void RespawnPlayer()
