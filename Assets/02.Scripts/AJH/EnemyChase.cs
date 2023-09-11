@@ -7,12 +7,15 @@ public class EnemyChase : StateMachineBehaviour
 {
     private NavMeshAgent agent;
     private Transform player;
+    private PlayerController playerController;
+    [SerializeField] private float movementDecrease;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateinfo, int layerindex)
     {
         agent = animator.GetComponent<NavMeshAgent>();
         player = GameManager.Instance.player.transform;
-        agent.speed = 3.5f;
+        playerController = player.GetComponent<PlayerController>();
+        agent.speed = playerController.moveSpeed / movementDecrease;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
