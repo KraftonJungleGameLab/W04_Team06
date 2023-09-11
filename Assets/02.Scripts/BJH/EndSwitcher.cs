@@ -22,7 +22,7 @@ public class EndSwitcher : MonoBehaviour
 
     public void NextScenses(int i)
     {
-        nestSceneNum = i;
+        nestSceneNum = i;        
         animator.SetTrigger("NextScenes");
     }
 }
