@@ -5,6 +5,7 @@ using UnityEngine;
 public class EquippableObject : MonoBehaviour, IInteractableObject
 {
     public Vector3 equipLocalPosition;
+    public Quaternion equipLocalRotation;
     [HideInInspector] public Vector3 defaultPosition;
     [HideInInspector] public Transform defaultParent;
 
@@ -53,7 +54,7 @@ public class EquippableObject : MonoBehaviour, IInteractableObject
 
     public void InitObject()
     {
-        transform.parent.parent = defaultParent;
-        transform.parent.position = defaultPosition;
+        transform.parent = defaultParent;
+        transform.position = defaultPosition;
     }
 }
