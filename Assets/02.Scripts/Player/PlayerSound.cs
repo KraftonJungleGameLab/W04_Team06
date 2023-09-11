@@ -4,22 +4,27 @@ using UnityEngine;
 
 public class PlayerSound : MonoBehaviour
 {
-    AudioSource footAudio;
+    [SerializeField] AudioSource footRAudio;
+    [SerializeField] AudioSource footLAudio;
+    [SerializeField] AudioSource dragAudio;
 
-    // Start is called before the first frame update
-    void Start()
+    public void FootR()
     {
-        footAudio = GetComponent<AudioSource>();
+        footRAudio.Play();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void FootL()
     {
-        
+        footLAudio.Play();
     }
 
-    public void Foot()
+    public void DragOn()
     {
-        footAudio.Play();
+        dragAudio.Play();
+    }
+
+    public void DragOff()
+    {
+        dragAudio.Stop();
     }
 }
