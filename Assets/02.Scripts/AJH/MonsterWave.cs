@@ -16,6 +16,7 @@ public class MonsterWave : StateMachineBehaviour
         agent = animator.GetComponent<NavMeshAgent>();
         player = GameManager.Instance.player.transform;
         playerController = player.GetComponent<PlayerController>();
+        movementDecrease = Random.Range(movementDecrease - 0.05f, movementDecrease);
         agent.speed = playerController.moveSpeed / movementDecrease;
     }
 
