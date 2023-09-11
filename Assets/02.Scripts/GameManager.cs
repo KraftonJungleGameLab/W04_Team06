@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
@@ -28,6 +29,7 @@ public class GameManager : MonoBehaviour
 
     public Player player;
     [HideInInspector] public Vector3 savePoint;
+    public UnityAction InitAction;
 
     private void Start()
     {
@@ -38,12 +40,5 @@ public class GameManager : MonoBehaviour
     public void SetSavePoint(Vector3 savePosition)
     {
         savePoint = savePosition;
-    }
-
-    public void RespawnPlayer()
-    {
-        player.transform.position = savePoint;
-        Physics.SyncTransforms();
-        player.Init();
     }
 }

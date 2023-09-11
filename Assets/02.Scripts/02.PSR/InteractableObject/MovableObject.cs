@@ -15,6 +15,11 @@ public class MovableObject : MonoBehaviour, IInteractableObject
 
     private StateName interactState = StateName.GrabIdle;
 
+    private void Awake()
+    {
+        GameManager.Instance.InitAction += InitObject;
+    }
+
     private void Start()
     {
         defaultPosition = transform.parent.position;
@@ -48,5 +53,11 @@ public class MovableObject : MonoBehaviour, IInteractableObject
     public StateName GetInteractState()
     {
         return interactState;
+    }
+
+    public void InitObject()
+    {
+        transform.parent.parent = defaultParent;
+        transform.parent.position = defaultPosition;
     }
 }

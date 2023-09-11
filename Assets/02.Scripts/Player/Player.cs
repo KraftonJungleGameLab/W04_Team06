@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
 
     void Awake()
     {
-
+        GameManager.Instance.InitAction += RespawnPlayer;
     }
 
     void Start()
@@ -39,6 +39,7 @@ public class Player : MonoBehaviour
         isRecoveryCoroutineOn = false;
         stateMachine.ChangeState(StateName.Idle);
         playerController.isControllable = true;
+        interactableObject = null;
     }
 
     void Update()
@@ -93,7 +94,14 @@ public class Player : MonoBehaviour
     public void Dead()
     {
         StopRecoveryCoroutine();
-        GameManager.Instance.RespawnPlayer();
+        GameManager.Instance.InitAction();
+    }
+
+    public void RespawnPlayer()
+    {
+        transform.position = GameManager.Instance.savePoint;
+        Physics.SyncTransforms();
+        Init();
     }
 
     private IEnumerator RecoveryOnAfterSeconds(float seconds)
