@@ -280,7 +280,7 @@ public partial class @PlayerInputActionsCustom: IInputActionCollection2, IDispos
                 {
                     ""name"": """",
                     ""id"": ""7f52ef03-115b-4ebd-a208-320942c70856"",
-                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
